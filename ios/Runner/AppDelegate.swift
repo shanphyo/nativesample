@@ -1,6 +1,7 @@
 import UIKit
 import Flutter
 import MobileCoreServices
+import SwiftUI
 
 @UIApplicationMain
 @objc class AppDelegate: FlutterAppDelegate {
@@ -11,6 +12,7 @@ import MobileCoreServices
     let controller : FlutterViewController = window?.rootViewController as! FlutterViewController
     let batteryChannel = FlutterMethodChannel(name: "samples.flutter.dev/battery",
                                                  binaryMessenger: controller.binaryMessenger)
+  
     batteryChannel.setMethodCallHandler({
       [weak self] (call: FlutterMethodCall, result: FlutterResult) -> Void in
       // Note: this method is invoked on the UI thread.
@@ -18,7 +20,7 @@ import MobileCoreServices
         result(FlutterMethodNotImplemented)
         return
       }
-      self?.receiveBatteryLevel(result: result)
+      self?.readDocument(result: result)
     })
     GeneratedPluginRegistrant.register(with: self)
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
@@ -34,14 +36,18 @@ import MobileCoreServices
         result(Int(device.batteryLevel * 100))
       }
     }
-    private func re(){
-        let documentPicker = UIDocumentPickerViewController(documentTypes: [String(kUTTypeText),String(kUTTypeContent),String(kUTTypeItem),String(kUTTypeData)], in: .import)
-        //Call Delegate
-        documentPicker.delegate = self
-        self.present(documentPicker, animated: true)
+    private func readDocument(result: FlutterResult){
+        print("kkd")
+        let d = ReadDocument()
+        d.clickFunction()
+        result(Int(5 * 100))
     }
+   
    
    
 
 
 }
+
+
+
